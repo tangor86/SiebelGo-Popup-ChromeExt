@@ -1,0 +1,39 @@
+{
+  "name": "Hello, World!",
+  "description": "Navigate and execute custom js script",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+	"tabs",
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "background": {
+	"service_worker": "background.js"
+  },
+  "content_scripts": [{
+	"matches": [
+		"https://example.com/",
+		"https://www.delfi.lv/",
+		"https://github.com/*"
+	],
+	"css": ["contentStyles.css"],
+	"js": ["contentScript.js"]
+  }],
+  "action": {},
+  "host_permissions": [
+	"<all_urls>",
+	"https://example.com/",
+	"https://www.delfi.lv/",
+	"https://github.com/"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Home",
+        "mac": "Command+Home"
+      }
+    }
+  }
+}

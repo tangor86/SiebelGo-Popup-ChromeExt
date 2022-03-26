@@ -1,0 +1,48 @@
+	//"<all_urls>",
+
+"content_scripts": [{
+	"matches": ["<all_urls>"],
+	"css": ["contentStyles.css"],
+	"js": ["contentScript.js"]
+  }],
+  
+  "host_permissions": [
+	"<all_urls>",
+
+"service_worker": "background.js"
+
+navigator.clipboard.readText().then(
+  clipText => document.body.innerText = clipText);
+
+setTimeout(async()=>console.log(
+     await window.navigator.clipboard.readText()), 3000)
+
+
+chrome.action.onClicked.addListener(async tab => {
+	
+	console.log('test from backgroun js!');
+	
+	getClipboardContents();
+
+	chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+		let url = tabs[0].url;
+		// use `url` here inside the callback because it's asynchronous!
+		
+		console.log('url: ' + url);
+
+		//console.log('clip: ' + getContentFromClipboard());
+		
+	});
+
+	/*
+	await chrome.tabs.update(tab.id, {url: "https://www.delfi.lv/"});
+	//await chrome.tabs.update(tab.id, {url: "https://example.com"});
+	//await chrome.tabs.update(tab.id, {url: "http://times.lv"});
+	await onTabUrlUpdated(tab.id);
+	const results = await chrome.scripting.executeScript({
+		target: {tabId: tab.id},
+		files: ['content.js'],
+	});
+	*/
+
+});
