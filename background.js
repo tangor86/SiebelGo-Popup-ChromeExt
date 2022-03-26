@@ -62,6 +62,8 @@ function contentScriptFunc(name) {
 
 // background.js
 chrome.action.onClicked.addListener((tab) => {
+	console.log('tab.id: ', tab.id);
+	
 	chrome.scripting.executeScript({
 		target: {tabId: tab.id},
 		function: contentScriptFunc,

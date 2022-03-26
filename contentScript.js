@@ -3,7 +3,7 @@ function hideIt(mySelector) {
 	x.style.display = "none";
 }
 
-console.log( "JavaScript Injected! content script 2!" ); 
+console.log( "JavaScript Injected! content script 2.3!" ); 
 
 //document.body.innerHTML = 'Content script 2';
 
@@ -30,11 +30,13 @@ document.querySelector('body').prepend(div);
 */
 
 let linksObj = [
+	{name: 'Hello!', viewName: 'disp+rules'},
 	{name: 'Dispatch Rules', viewName: 'disp+rules'},
 	{name: 'Data Map Editor', viewName: 'dm+editor'},
 	{name: 'Workflow Deployment', viewName: 'wf+deployment'}
 ];
 //console.dir(linksObj);
+
 
 let gce_divMain = document.createElement("div");
 let gce_spanHelper = document.createElement("span");
@@ -42,7 +44,7 @@ let gce_divContainner = document.createElement("div");
 let gce_divCloseButton = document.createElement("div");
 let gce_divText = document.createElement("div");
 let gce_link;
-
+/*
 gce_divMain.classList.add('SiebelGo');
 //gce_divMain.classList.add('hover_bkgr_hidden');
 gce_spanHelper.classList.add('helper');
@@ -76,14 +78,33 @@ gce_divMain.appendChild(gce_spanHelper);
 gce_divMain.appendChild(gce_divContainner);
 
 document.querySelector('body').prepend(gce_divMain);
+*/
 
-gce_divMain.addEventListener('click', () => {
+//https://stackoverflow.com/questions/15873904/adding-complex-html-using-a-chrome-content-script
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var div = document.createElement('div');
+        div.innerHTML = this.responseText;
+        document.body.insertBefore(div, document.body.firstChild);
+    } else {
+        console.log('files not found');
+    }
+};
+xhttp.open("GET", chrome.runtime.getURL("/popup.html"), false);	//true for asyn
+xhttp.send();
+
+
+//gce_divMain.addEventListener('click', () => {
+document.querySelector('.SiebelGo').addEventListener('click', () => {
     hideIt('.SiebelGo');
 });
 
-gce_divCloseButton.addEventListener('click', () => {
+//gce_divCloseButton.addEventListener('click', () => {
+document.querySelector('.SiebelGo .popupCloseButton').addEventListener('click', () => {
     hideIt('.SiebelGo');
 });
+
 
 const muLinks = document.querySelectorAll('.SiebelGo .link');
 
