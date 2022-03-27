@@ -29,7 +29,8 @@ function contentScriptFunc(name) {
 	var searchFor = 'view=';
 	var winLoc = window.location.href;
 	var foundAt = winLoc.indexOf(searchFor);
-	var x = document.querySelector(".SiebelGo");
+	var x = document.querySelector("#GHE_SiebelGo");
+	
 	x.style.display = "block";
 
 	//getClipboardContents();

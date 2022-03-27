@@ -20,7 +20,7 @@ document.querySelector('body').prepend(div);
 */
 
 /*
-<div class="SiebelGo">
+<div class="GHE_SiebelGo">
     <span class="helper"></span>
     <div>
         <div class="popupCloseButton">&times;</div>
@@ -96,19 +96,45 @@ xhttp.send();
 
 
 //gce_divMain.addEventListener('click', () => {
-document.querySelector('.SiebelGo').addEventListener('click', () => {
-    hideIt('.SiebelGo');
+document.querySelector('#GHE_SiebelGo').addEventListener('click', () => {
+	hideIt('#GHE_SiebelGo');
+	console.log("Hide on GHE_SiebelGo");
 });
 
 //gce_divCloseButton.addEventListener('click', () => {
-document.querySelector('.SiebelGo .popupCloseButton').addEventListener('click', () => {
-    hideIt('.SiebelGo');
+document.querySelector('#GHE_SiebelGo .popupCloseButton').addEventListener('click', () => {
+    hideIt('#GHE_SiebelGo');
+	console.log("Hide on GHE_SiebelGo .popupCloseButton");
 });
 
-
-const muLinks = document.querySelectorAll('.SiebelGo .link');
-
-muLinks.forEach(el => el.addEventListener('click', event => {
+//to avoid closing popup on click inside popup
+document.querySelector('#GHE_SiebelGo .popup').addEventListener('click', event => {
 	event.stopPropagation();
-	console.log(event.target.getAttribute("toview"));
+});
+
+//simple links!
+const myLinks = document.querySelectorAll('#GHE_SiebelGo .link');
+myLinks.forEach(el => el.addEventListener('click', event => {
+	window.location.href = event.target.getAttribute("url");
+	console.log(event.target.getAttribute("url"));
+	event.stopPropagation();
+}));
+
+
+//tab links
+const tabLinks = document.querySelectorAll('#GHE_SiebelGo .linkTab');
+tabLinks.forEach(el => el.addEventListener('click', event => {
+	var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+    link.href = event.target.getAttribute("url");
+	//'http://www.google.com';
+    link.target = '_blank';
+    var event2 = new MouseEvent('click', {
+        'view': window,
+        'bubbles': false,
+        'cancelable': true
+    });
+    link.dispatchEvent(event2);
+
+	console.log(event.target.getAttribute("url"));
+	//event.stopPropagation();
 }));
